@@ -1,0 +1,33 @@
+<include file="Home@Partials:header" />
+<include file="Home@Partials:sidebar" />
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="main-table" class="table table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>uid</th>
+                                    <th>appid</th>
+                                    <th>名称</th>
+                                    <th>类型</th>
+                                    <th>点击时间</th>
+                                    <th>点击IP</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php  foreach($taskList as $v):?><tr id="task-{$v['id']}-tid-{$v['tid']}"><td>{$v['uid']}</td><td>{$v['appid']}</td><td><?php echo $v['typeid'] == 0 ? $applist[$v['appid']] : $v['appid']?></td><td>{:C('TASK_TYPE.' . $v['typeid'])}</td><td>{:date('Y-m-d H:i:s',$v['timec'])}</td><td>{$v['ipc']}</td><td>{:C('TASK_STATUS.' . $v['status'])}</td></tr><?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- ./wrapper -->
+<include file="Home@Partials:REQUIRED_JS_SCRIPTS" />
+<script src="<?php echo STATIC_PATH ?>dist/js/task-index.js"></script>
+<include file="Home@Partials:foot" />

@@ -1,0 +1,152 @@
+<include file="Home@Partials:header" />
+<include file="Home@Partials:sidebar" />
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="main-table" class="table table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>APPID</th>
+                                        <th>APPNAME</th>
+                                        <th>URL</th>
+                                        <th>TYPE</th>
+                                        <th>params</th>
+                                        <th>RESULT</th>
+                                        <th>status</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php  foreach($data as $v):?>
+                                    <tr id="valid-{$v['appid']}">
+                                        <td>{$v['appid']}</td>
+                                        <td>{$v['appname']}</td>
+                                        <td>{$v['url']}</td>
+                                        <td>{$v['type']}</td>
+                                        <td>{$v['params']}</td>
+                                        <td>{$v['result']}</td>
+                                        <td><?php echo $v['status'] == 1 ? '启用' : '禁用'?></td>
+                                        <td>
+                                            <a class="link-edit-ad" valid="{$v['appid']}"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <div id="modal-add-proj" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 id="title-add-proj" class="modal-title">添加项目</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- form start -->
+                        <form id="form-add-proj" class="form-horizontal" action="#">
+                            <div class="form-group">
+                                <label for="input-add-proj-oem" class="col-sm-2 control-label">APPID</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-appid"  class="form-control" name="appid" placeholder="APPID" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">APPID不能为空</span>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="input-add-proj-company" class="col-sm-2 control-label">广告名称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="input-add-name" class="form-control" name="appname" placeholder="广告名称" required>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                        <span class="tip-alert">名称不能为空</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-add-proj-oem" class="col-sm-2 control-label">type</label>
+                                    <div class="col-sm-10">
+                                        <select id="select-add-type" class="form-control selectpicker" name="type">
+                                            <option value="get">get</option>
+                                            <option value="post">post</option>
+                                            <option value="stream">stream</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                        <span class="tip-alert">type不能为空</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-add-proj-model" class="col-sm-2 control-label">params</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="input-add-params" class="form-control" name="params" placeholder="链接" required>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                        <span class="tip-alert">params not nill</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-add-proj-project" class="col-sm-2 control-label">result</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="input-add-result" class="form-control" name="result" placeholder="result" required>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                        <span class="tip-alert">result not null</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-add-proj-project" class="col-sm-2 control-label">url</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="input-add-url" class="form-control" name="url" placeholder="url" required>
+                                    </div>
+                                    <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                        <span class="tip-alert">url not null</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" value="dosubmit" class="form-control" name="dosubmit" />
+                                    <label for="select-add-proj-operator" class="col-sm-2 control-label">状态</label>
+                                    <div class="col-sm-10">
+                                        <select id="select-add-status" class="form-control selectpicker" name="status">
+                                            <option value="1">启用</option>
+                                            <option value="0">禁用</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="tip-alert">注：所有内容均为必填</span>
+                                </div>
+                            </div><!-- /.box-body -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button type="button" id="btn-add-proj-submit" class="btn btn-primary">确认</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </section>
+</div><!-- ./wrapper -->
+<include file="Home@Partials:REQUIRED_JS_SCRIPTS" />
+<script src="<?php echo STATIC_PATH ?>dist/js/apiValid-manage.js"></script>
+<script>
+$(function() {
+    api.init({
+        saveUrl: "__CONTROLLER__/saveValid.html",
+        editValid: "__CONTROLLER__/editValid.html",
+    });
+});
+</script>
+<include file="Home@Partials:foot" />

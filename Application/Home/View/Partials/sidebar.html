@@ -1,0 +1,57 @@
+
+<style>
+    .table-responsive{overflow-x: hidden;}
+    .form-tip{color: red}
+</style>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>{$_title}</h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> 后台主页</a></li>
+            <li class="active">{$_title}</li>
+        </ol>
+    </section>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="搜索项目...">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+
+                <?php foreach($_menu as $k =>$v): ?>
+
+                <li class="treeview">
+                    <a<?php  echo $v['href'] ? ' href='.U($v['href']) : ''?>>
+                        <i class="fa {$v['ico']}"></i> <span>{$v['name']}</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <?php if($v['child']):?>
+                    <ul class="treeview-menu">
+                        <?php foreach($v['child'] as $child):?>
+                        <li><a href="{:U($child['href'])}">{$child['name']}</a></li>
+                        <?php endforeach;?>
+                    </ul>
+                    <?php endif;?>
+                </li>
+                <?php endforeach;?>
+                <!--            <li class="treeview {{ Request::is('project/*') ? 'active' : '' }}">
+                                <a>
+                                    <i class="fa fa-exchange"></i> <span>接口管理</span> <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="{{ Request::is('project/manage') ? 'active' : '' }}"><a href="{:U('App/Api/index')}">排重接口</a></li>
+                                    <li class="{{ Request::is('project/release') ? 'active' : '' }}"><a href="{{ url('project/release') }}">回调接口</a></li>
+                                    <li class="{{ Request::is('project/imei') ? 'active' : '' }}"><a href="{{ url('project/imei') }}">配置测试IMEI</a></li>
+                                </ul>
+                            </li>-->
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>

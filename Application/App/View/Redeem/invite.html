@@ -1,0 +1,45 @@
+<include file="Home@Partials:dialog_header" />
+<include file="Home@Partials:dialog_sidebar" />
+<style>
+    .table-responsive h4{
+        text-align: center;
+        color: red;
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <h4>收徒信息</h4>
+                        <table id="main-table" class="table table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>徒弟id</th>
+                                    <th>创建时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>
+</div><!-- ./wrapper -->
+<include file="Home@Partials:REQUIRED_JS_SCRIPTS" />
+<script src="<?php echo STATIC_PATH ?>dist/js/apply-user-invite.js"></script>
+<script src="<?php echo STATIC_PATH ?>plugins/dialog/dialog.js"></script>
+<link rel="stylesheet" href="<?php echo STATIC_PATH ?>plugins/dialog/dialog.css">
+<script>
+    $(function() {
+        UserInvite.init({
+            infoUrl: "__CONTROLLER__/ajaxInviteList/uid/{$uid}",
+        });
+    });
+</script>
+<include file="Home@Partials:foot" />

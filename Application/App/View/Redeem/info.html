@@ -1,0 +1,51 @@
+<include file="Home@Partials:dialog_header" />
+<include file="Home@Partials:dialog_sidebar" />
+<!-- Main content -->
+<style>
+    .table-responsive h4{
+        text-align: center;
+        color: red;
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <h4>提现信息</h4>
+                        <table id="main-table" class="table table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>金额</th>
+                                    <th>状态</th>
+                                    <th>类型</th>
+                                    <th>账号</th>
+                                    <th>时间</th>
+                                    <th>提现时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>
+</div><!-- ./wrapper -->
+<include file="Home@Partials:REQUIRED_JS_SCRIPTS" />
+<script src="<?php echo STATIC_PATH ?>dist/js/apply-user-info.js"></script>
+<script>
+    $(function() {
+        Info.init({
+            ApplyLisUrl: "__CONTROLLER__/ajaxApplyList/uid/{$uid}"
+        });
+    });
+</script>
+<include file="Home@Partials:foot" />
+
+
+

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@section('title')@show | 天语Fota</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect.
+    -->
+    <link rel="stylesheet" href="dist/css/skins/skin-blue-light.min.css">
+    <!-- toastr 2.1.2 -->
+    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+    <!-- bootstrap-select 1.7.4 -->
+    <link rel="stylesheet" href="plugins/bootstrap-select/bootstrap-select.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="plugins/datatables/extensions/Buttons/css/buttons.bootstrap.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style>
+      .bootbox .modal-dialog {
+        margin-top: 15%;
+      }
+      
+      #toast-container div {
+        opacity: 0.9;
+      }
+      
+      .bootstrap-select.form-control button {
+        border-radius: 0px;
+        background-color: #FFF;
+      }
+    </style>
+  </head>
+  <body class="hold-transition skin-blue-light sidebar-mini">
+    <div class="wrapper">
+
+	<!----   end header   ---->
+
+		<header class="main-header">
+		  <!-- Logo -->
+		  <a href="{{ url('home') }}" class="logo">
+			<!-- mini logo for sidebar mini 50x50 pixels -->
+			<span class="logo-mini"><b>F</b>ota</span>
+			<!-- logo for regular state and mobile devices -->
+			<span class="logo-lg"><b>天语</b>Fota</span>
+		  </a>
+		  <!-- Header Navbar: style can be found in header.less -->
+		  <nav class="navbar navbar-static-top" role="navigation">
+			<!-- Sidebar toggle button-->
+			<a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+			  <span class="sr-only">Toggle navigation</span>
+			</a>
+			<div class="navbar-custom-menu">
+			  <ul class="nav navbar-nav">
+				<!-- User Account: style can be found in dropdown.less -->
+				<li class="dropdown user user-menu">
+				  <a class="dropdown-toggle" data-toggle="dropdown">
+					<i class="fa fa-user"></i>
+					<span class="hidden-xs">你好, {{ Auth::user()->name }}</span>
+				  </a>
+				  <ul class="dropdown-menu">
+					<!-- Menu Footer-->
+					<li class="user-footer">
+					  <div class="pull-left">
+						<a class="btn btn-default btn-flat">个人资料</a>
+					  </div>
+					  <div class="pull-right">
+						<a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat">退出登录</a>
+					  </div>
+					</li>
+				  </ul>
+				</li>
+			  </ul>
+			</div>
+		  </nav>
+		</header>
+		<!--  end    -->
+
+	 <!-- Left side column. contains the logo and sidebar -->
+	  <aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+		  <!-- search form -->
+		  <form action="#" method="get" class="sidebar-form">
+			<div class="input-group">
+			  <input type="text" name="q" class="form-control" placeholder="搜索项目...">
+			  <span class="input-group-btn">
+				<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+			  </span>
+			</div>
+		  </form>
+		  <!-- /.search form -->
+		  <!-- sidebar menu: : style can be found in sidebar.less -->
+		  <ul class="sidebar-menu">
+			<li class="header">项目管理</li>
+			<li class="treeview {{ Request::is('project/*') ? 'active' : '' }}">
+			  <a>
+				<i class="fa fa-sitemap"></i> <span>版本控制</span> <i class="fa fa-angle-left pull-right"></i>
+			  </a>
+			  <ul class="treeview-menu">
+				<li class="{{ Request::is('project/manage') ? 'active' : '' }}"><a href="{{ url('project/manage') }}">项目管理</a></li>
+				<li class="{{ Request::is('project/release') ? 'active' : '' }}"><a href="{{ url('project/release') }}">发布升级</a></li>
+				<li class="{{ Request::is('project/imei') ? 'active' : '' }}"><a href="{{ url('project/imei') }}">配置测试IMEI</a></li>
+			  </ul>
+			</li>
+			<li class="treeview {{ Request::is('stats/*') ? 'active' : '' }}">
+			  <a>
+				<i class="fa fa-bar-chart"></i> <span>数据统计</span> <i class="fa fa-angle-left pull-right"></i>
+			  </a>
+			  <ul class="treeview-menu">
+				<li class="{{ Request::is('stats/overview') ? 'active' : '' }}"><a href="{{ url('stats/overview') }}">统计概况</a></li>
+				<li class="{{ Request::is('stats/user') ? 'active' : '' }}"><a href="{{ url('stats/user') }}">用户统计</a></li>
+				<li class="{{ Request::is('stats/upgrade') ? 'active' : '' }}"><a href="{{ url('stats/upgrade') }}">升级统计</a></li>
+			  </ul>
+			</li>
+			
+			<li class="header">用户管理</li>
+			<li class="{{ Request::is('user/manage') ? 'active' : '' }}"><a href="{{ url('user/manage') }}"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
+		  </ul>
+		</section>
+		<!-- /.sidebar -->
+	  </aside>
+
+	  <!--  end aside    -->
+
+<!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+         <h1>配置测试IMEI</h1>
+		  <ol class="breadcrumb">
+			<li><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> 后台主页</a></li>
+			<li class="active">配置测试IMEI</li>
+		  </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+			<div class="col-xs-12">
+			  <div class="box">
+				<div class="box-body">
+				  <div class="table-responsive">
+					<table id="main-table" class="table table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%">
+					  <thead>
+						<tr>
+						  <th>公司</th>
+						  <th>IMEI</th>
+						  <th>添加时间</th>
+						  <th>操作</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						@if (count($imeis) > 0)
+						@foreach ($imeis as $imei)
+						<tr id="imei-{{ $imei->id }}">
+						  <td>{{ $imei->company }}</td>
+						  <td>{{ $imei->imei }}</td>
+						  <td>{{ $imei->created_at }}</td>
+						  <td>
+							<!--a class="link-edit-imei" data-imei-id="{{ $imei->id }}"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="link-remove-imei" data-imei-id="{{ $imei->id }}"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+						  </td>
+						</tr>
+						@endforeach
+						@endif
+					  </tbody>
+					</table>
+				  </div>
+				</div><!-- /.box-body -->
+			  </div><!-- /.box -->
+			</div><!-- /.col -->
+		  </div><!-- /.row -->
+		  
+		  <div id="modal-add-imei" class="modal">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  <h4 id="title-add-imei" class="modal-title">添加IMEI</h4>
+				</div>
+				<div class="modal-body">
+				  <!-- form start -->
+				  <form id="form-add-imei" class="form-horizontal">
+					<div class="box-body">
+					  <div class="form-group">
+						<label for="select-add-imei-company" class="col-sm-2 control-label">公司</label>
+						<div class="col-sm-10">
+						  <select id="select-add-imei-company" class="form-control selectpicker" name="company">
+							<option value="" role="holder" selected>选择公司</option>
+							@if (count($companyNames) > 0)
+							@foreach ($companyNames as $companyName)
+							<option>{{ $companyName['company'] }}</option>
+							@endforeach
+							@endif
+						  </select>
+						</div>
+						<div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+						  <span class="tip-alert">请选择公司</span>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="textarea-add-imei-imei" class="col-sm-2 control-label">IMEI</label>
+						<div class="col-sm-10">
+						  <textarea id="textarea-add-imei-imei" class="form-control" name="imei" placeholder="IMEI，每行1条" style="min-height: 160px;" required></textarea>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="input-add-imei-upload" class="col-sm-2 control-label">上传</label>
+						<div class="col-sm-10">
+						  <div class="input-group">
+							<input id="input-add-imei-upload" class="form-control" type="text" placeholder="选择IMEI文本文件(txt)，每行1条" readonly/>
+							<span class="input-group-btn">
+							  <span class="btn btn-primary btn-file">浏览<input type="file" id="btn-add-imei-upload" name="imei_file" accept=".txt"></span>
+							</span>
+						  </div>
+						</div>
+						<div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+						  <span class="tip-alert">上传不能为空</span>
+						</div>
+					  </div>
+					</div><!-- /.box-body -->
+				  </form>
+				</div>
+				<div class="modal-footer">
+				  <button class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+				  <button id="btn-add-imei-reset" class="btn btn-default pull-left">重置</button>
+				  <button id="btn-add-imei-submit" class="btn btn-primary">确认</button>
+				</div>
+			  </div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		  </div><!-- /.modal -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+        
+    </div><!-- ./wrapper -->
+    
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery 2.1.4 -->
+    <!-- <script src="{{ asset('plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>-->
+    <!-- jQuery 1.11.3 -->
+    <script src="plugins/jQuery/jquery-1.11.3.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- bootbox 4.4.0 -->
+    <script src="plugins/bootbox/bootbox.min.js"></script>
+    <!-- toastr 2.1.2 -->
+    <script src="plugins/toastr/toastr."></script>
+    <!-- jquery-validation 1.14.0 -->
+    <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+    <!-- jquery-validate-bootstrap-popover 1.6.3 -->
+    <script src="plugins/jquery-validate-bootstrap-popover/jquery.validate.bootstrap.popover.min.js"></script>
+    <!-- bootstrap-select 1.7.4 -->
+    <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!-- DataTables -->
+    <script src="plugins/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/js/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+    <script src="dist/js/project-common.js"></script>
+
+    @yield('moreBody')
+  </body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,309 @@
+<include file="Home@Partials:header" />
+<include file="Home@Partials:sidebar" />
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="main-table" class="table table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>关键词</th>
+                                    <th>总量</th>
+                                    <th>激活</th>
+                                    <th>点击</th>
+                                    <th>启用</th>
+                                    <th>显示</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php  foreach($data as $v):?>
+                                <tr id="ad-{$v['appid']}">
+                                    <td>{$v['name']}</td>
+                                    <td>{$v['keywords']}</td>
+                                    <td>{$v['amount']}</td>
+                                    <td>{$v['amounta']}</td>
+                                    <td>{$v['click']}</td>
+                                    <td><?php echo $v['status'] == 1 ? '投放' : '未投放'?></td>
+                                    <td><?php echo $v['status'] == 4 ? '否' : '是'?></td>
+                                    <td>
+                                        <a class="link-edit-ad" ad-id="{$v['appid']}"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="link-conf-ad" ad-id="{$v['appid']}"><i class="fa fa-pencil-square-o"></i>&nbsp;配置接口</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+    <div id="modal-add-proj" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="title-add-proj" class="modal-title">添加项目</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- form start -->
+                    <form id="form-add-proj" class="form-horizontal" action="#">
+                        <div class="form-group">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">APPID</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="input-add-appid" class="form-control" name="appid" placeholder="APPID" required>
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                <span class="tip-alert">APPID不能为空</span>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="input-add-proj-company" class="col-sm-2 control-label">广告名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-name" class="form-control" name="name" placeholder="广告名称" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">名称不能为空</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-add-proj-oem" class="col-sm-2 control-label">关键词</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-keywords" class="form-control" name="keywords" placeholder="关键词" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">关键词不能为空</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-add-proj-model" class="col-sm-2 control-label">链接</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-appstoreurl" class="form-control" name="appstoreUrl" placeholder="链接" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">链接不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-add-proj-project" class="col-sm-2 control-label">图标</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-img" class="form-control" name="img" placeholder="图标" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">图标不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-add-proj-project" class="col-sm-2 control-label">位置</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-location" class="form-control" name="location" placeholder="位置" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">位置不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-add-proj-project" class="col-sm-2 control-label">结束时间</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-endTime" class="form-control" name="endTime" placeholder="结束时间" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">位置不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-add-proj-product" class="col-sm-2 control-label">奖励</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-reward" class="form-control" name="reward" placeholder="奖励" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">奖励不能为空</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-add-proj-oem" class="col-sm-2 control-label">总量</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-amount" class="form-control" name="amount" placeholder="总量" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">总量不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-add-proj-oem" class="col-sm-2 control-label">提示</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-guide" class="form-control" name="guide" placeholder="提示" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">提示不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-add-proj-oem" class="col-sm-2 control-label">检测时长</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-actiontime" class="form-control" name="actiontime" placeholder="检测时长(秒)" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">检测时长不能为空</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-add-proj-oem" class="col-sm-2 control-label">Pro</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="input-add-proj-oem" class="form-control" name="pro" placeholder="Pro" required>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">Pro不能为空</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="select-add-proj-operator" class="col-sm-2 control-label">状态</label>
+                                <div class="col-sm-10">
+                                    <input type="hidden"  name="dosubmit" value="1" />
+                                    <select id="select-add-status" class="form-control selectpicker" name="status">
+                                        <option value="" selected>选择状态</option>
+                                        <option value="1">投放 显示</option>
+                                        <option value="3">停止投放 显示</option>
+                                        <option value="4"> 不显示</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                    <span class="tip-alert">请选择状态</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="tip-alert">注：所有内容均为必填</span>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="button" id="btn-add-proj-submit" class="btn btn-primary">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+
+
+
+    <div id="modal-conf" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="title-add-proj" class="modal-title">配置</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- form start -->
+                    <form id="form-conf" class="form-horizontal" action="#">
+                        <div class="form-group">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">APPID</label>
+                            <div class="col-sm-10">
+                                <input type="text" disabled="disabled" id="confappid" class="form-control" name="appid" placeholder="APPID" >
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                <span class="tip-alert">APPID不能为空</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="select-add-proj-operator" class="col-sm-2 control-label">排重</label>
+                            <div class="col-sm-10">
+                                <select id="select-validation" class="form-control selectpicker" name="validAtion">
+                                    <option value="1">开启排重</option>
+                                    <option value="0">关闭排重</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-2 form-tip" style="display: none;">
+                                <span class="tip-alert">请选择状态</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group validation">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">验证地址</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="validUrl" class="form-control" name="validUrl" placeholder="验证地址" >
+                            </div>
+                        </div>
+                        <div class="form-group validation">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">请求方式</label>
+                            <div class="col-sm-10">
+                                <select id="select-validType" class="form-control selectpicker" name="validType">
+                                    <option value="1">GET</option>
+                                    <option value="2">POST</option>
+                                    <option value="3">STREAM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group validation">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">验证返回</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="validReturn" class="form-control" name="validReturn" placeholder="验证返回" >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">上传激活</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="remark" class="form-control" name="remark" placeholder="上传激活" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">点击上报</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="clickUrl" class="form-control" name="clickUrl" placeholder="点击上报" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="confappidhidden" name="appid" value="" />
+                            <label for="input-add-proj-oem" class="col-sm-2 control-label">访问回调</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="callbackUrl" class="form-control" name="callbackUrl" placeholder="访问回调" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="tip-alert">注：所有内容均为必填</span>
+                        </div>
+                </div><!-- /.box-body -->
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="button" id="conf-submit" class="btn btn-primary">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div><!-- ./wrapper -->
+<include file="Home@Partials:REQUIRED_JS_SCRIPTS" />
+<link href="http://testwz.ikaiwan.com/public/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script src="<?php echo STATIC_PATH ?>dist/js/project-manage.js"></script>
+<script type="text/javascript" src="http://testwz.ikaiwan.com/public/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<!--<script type="text/javascript" src="/public/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>-->
+<script type="text/javascript" src="http://testwz.ikaiwan.com/public/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+<script>
+    $(function() {
+        ProjectManage.init({
+            saveUrl: "__CONTROLLER__/add.html",
+            editUrl: "__CONTROLLER__/edit.html",
+            confUrl: "__CONTROLLER__/conf.html",
+        });
+    });
+</script>
+<include file="Home@Partials:foot" />
